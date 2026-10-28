@@ -1,0 +1,285 @@
+<Window x:Class="FilmesWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CineFlix Studio - Gerenciador de Filmes" 
+        Height="680" Width="980" MinHeight="600" MinWidth="880"
+        WindowStartupLocation="CenterScreen" Background="{StaticResource BrushBg}">
+    
+    <Window.Resources>
+        <!-- Estilo Base para os Cards Iniciais -->
+        <Style x:Key="ModernCardBtn" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="CardBorder" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="14" Padding="24">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <!-- ==================== TOPO / BARRA SUPERIOR ==================== -->
+        <Border Grid.Row="0" Background="{StaticResource BrushSidebar}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1" Padding="28,0">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Marca -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🎬 " FontSize="22" VerticalAlignment="Center"/>
+                    <TextBlock Text="CINEFLIX" FontSize="20" FontWeight="Black" Foreground="White" VerticalAlignment="Center"/>
+                    <TextBlock Text="." FontSize="20" FontWeight="Black" Foreground="{StaticResource BrushPrimary}" VerticalAlignment="Center"/>
+                    <Border Background="#1C1829" CornerRadius="6" Padding="6,2" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="STUDIO PRO" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrushPrimary}"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Status Live e Métricas Rápidas à Direita -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#0C1322" CornerRadius="8" Padding="10,5" Margin="0,0,10,0" BorderBrush="#1A253E" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Ellipse Width="8" Height="8" Fill="#10B981" Margin="0,0,6,0"/>
+                            <TextBlock Text="SQLite Ativo" FontSize="12" FontWeight="SemiBold" Foreground="#A7F3D0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="{StaticResource BrushCard}" CornerRadius="8" Padding="10,5" Margin="0,0,10,0" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1">
+                        <TextBlock x:Name="TxtHeaderTotal" Text="0 Filmes" FontSize="12" FontWeight="Bold" Foreground="#38BDF8"/>
+                    </Border>
+
+                    <Border Background="{StaticResource BrushCard}" CornerRadius="8" Padding="10,5" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1">
+                        <TextBlock x:Name="TxtHeaderMedia" Text="★ 0.0 Média" FontSize="12" FontWeight="Bold" Foreground="{StaticResource BrushGold}"/>
+                    </Border>
+
+                    <Border Background="#1E192B" CornerRadius="8" Padding="10,5" Margin="10,0,0,0" BorderBrush="#3B2A4A" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="👤 " FontSize="11" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtUsuarioLogado" Text="admin" FontSize="12" FontWeight="SemiBold" Foreground="#F43F5E" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Button x:Name="BtnLogout" Content="Sair" Style="{StaticResource BtnOutline}" Height="28" Padding="10,2" Margin="10,0,0,0" FontSize="11" Click="BtnLogout_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ==================== HERO / TÍTULO INICIAL ==================== -->
+        <StackPanel Grid.Row="1" Margin="32,24,32,16">
+            <TextBlock Text="Painel Inicial" FontSize="24" FontWeight="Black" Foreground="White"/>
+            <TextBlock Text="Selecione um dos 4 módulos abaixo para gerenciar o acervo cinematográfico:" 
+                       FontSize="13" Foreground="{StaticResource BrushTextMuted}" Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <!-- ==================== GRID DOS 4 CARDS ==================== -->
+        <Grid Grid.Row="2" Margin="32,0,32,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- CARD 1: FILMES / CATÁLOGO -->
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource ModernCardBtn}"
+                    Background="#111B30" BorderBrush="#1E3A8A" Click="BtnCardCatalogo_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Topo do Card: Ícone e Badge -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#1E293B" CornerRadius="10" Width="44" Height="44">
+                            <TextBlock Text="🎞️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Background="#172554" CornerRadius="8" Padding="10,4" BorderBrush="#1E40AF" BorderThickness="1">
+                            <TextBlock x:Name="TxtBadgeCatalogo" Text="CATÁLOGO COMPLETO" FontSize="11" FontWeight="Bold" Foreground="#60A5FA"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Título -->
+                    <TextBlock Grid.Row="1" Text="FILMES" FontSize="20" FontWeight="Black" Foreground="White" Margin="0,16,0,6"/>
+
+                    <!-- Descrição -->
+                    <TextBlock Grid.Row="2" Text="Listar todo o catálogo, visualizar detalhes, atualizar dados e remover títulos com ações integradas." 
+                               FontSize="13" Foreground="{StaticResource BrushTextMuted}" TextWrapping="Wrap"/>
+
+                    <!-- Rodapé do Card -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBlock Text="Acessar Catálogo" FontSize="13" FontWeight="Bold" Foreground="#38BDF8"/>
+                        <TextBlock Text=" →" FontSize="13" FontWeight="Bold" Foreground="#38BDF8"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <!-- CARD 2: NOVO FILME / CADASTRAR -->
+            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource ModernCardBtn}"
+                    Background="#0B231D" BorderBrush="#065F46" Click="BtnCardCadastrar_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Topo do Card -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#064E3B" CornerRadius="10" Width="44" Height="44">
+                            <TextBlock Text="✨" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Background="#022C22" CornerRadius="8" Padding="10,4" BorderBrush="#059669" BorderThickness="1">
+                            <TextBlock Text="NOVO TÍTULO" FontSize="11" FontWeight="Bold" Foreground="#34D399"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Título -->
+                    <TextBlock Grid.Row="1" Text="NOVO FILME" FontSize="20" FontWeight="Black" Foreground="White" Margin="0,16,0,6"/>
+
+                    <!-- Descrição -->
+                    <TextBlock Grid.Row="2" Text="Cadastrar uma nova produção com título, gênero, ano de lançamento, diretor, duração e nota crítica." 
+                               FontSize="13" Foreground="{StaticResource BrushTextMuted}" TextWrapping="Wrap"/>
+
+                    <!-- Rodapé do Card -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBlock Text="Cadastrar Novo" FontSize="13" FontWeight="Bold" Foreground="#10B981"/>
+                        <TextBlock Text=" →" FontSize="13" FontWeight="Bold" Foreground="#10B981"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <!-- CARD 3: PESQUISAR -->
+            <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource ModernCardBtn}"
+                    Background="#241B0E" BorderBrush="#78350F" Click="BtnCardPesquisar_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Topo do Card -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#451A03" CornerRadius="10" Width="44" Height="44">
+                            <TextBlock Text="🔍" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Background="#2D1102" CornerRadius="8" Padding="10,4" BorderBrush="#D97706" BorderThickness="1">
+                            <TextBlock Text="BUSCA REFINADA" FontSize="11" FontWeight="Bold" Foreground="#FBBF24"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Título -->
+                    <TextBlock Grid.Row="1" Text="PESQUISAR" FontSize="20" FontWeight="Black" Foreground="White" Margin="0,16,0,6"/>
+
+                    <!-- Descrição -->
+                    <TextBlock Grid.Row="2" Text="Buscar produções com filtros múltiplos por título, gênero, ano de lançamento e nota mínima." 
+                               FontSize="13" Foreground="{StaticResource BrushTextMuted}" TextWrapping="Wrap"/>
+
+                    <!-- Rodapé do Card -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBlock Text="Iniciar Busca" FontSize="13" FontWeight="Bold" Foreground="#F59E0B"/>
+                        <TextBlock Text=" →" FontSize="13" FontWeight="Bold" Foreground="#F59E0B"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <!-- CARD 4: ESTATÍSTICAS -->
+            <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource ModernCardBtn}"
+                    Background="#1E122C" BorderBrush="#581C87" Click="BtnCardEstatisticas_Click">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Topo do Card -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#3B0764" CornerRadius="10" Width="44" Height="44">
+                            <TextBlock Text="📊" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Background="#230438" CornerRadius="8" Padding="10,4" BorderBrush="#9333EA" BorderThickness="1">
+                            <TextBlock x:Name="TxtBadgeEstatisticas" Text="MÉTRICAS &amp; KPIS" FontSize="11" FontWeight="Bold" Foreground="#C084FC"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Título -->
+                    <TextBlock Grid.Row="1" Text="ESTATÍSTICAS" FontSize="20" FontWeight="Black" Foreground="White" Margin="0,16,0,6"/>
+
+                    <!-- Descrição -->
+                    <TextBlock Grid.Row="2" Text="Painel com contagem de títulos, média geral de notas, totalizadores e distribuição gráfica por gênero." 
+                               FontSize="13" Foreground="{StaticResource BrushTextMuted}" TextWrapping="Wrap"/>
+
+                    <!-- Rodapé do Card -->
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBlock Text="Ver Indicadores" FontSize="13" FontWeight="Bold" Foreground="#A855F7"/>
+                        <TextBlock Text=" →" FontSize="13" FontWeight="Bold" Foreground="#A855F7"/>
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </Grid>
+
+        <!-- ==================== RODAPÉ / STATUS BAR ==================== -->
+        <Border Grid.Row="3" Background="{StaticResource BrushSidebar}" BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,1,0,0" Padding="28,0">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="📁 Banco: SQLite (filmes.db) • Entity Framework Core 8 • .NET 8 WPF" 
+                           FontSize="11" Foreground="#475569" VerticalAlignment="Center"/>
+                <TextBlock x:Name="TxtUltimoFilme" Grid.Column="1" Text="Catálogo pronto" 
+                           FontSize="11" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

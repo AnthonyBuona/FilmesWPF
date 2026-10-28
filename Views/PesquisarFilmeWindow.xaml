@@ -1,0 +1,68 @@
+<Window x:Class="FilmesWPF.Views.PesquisarFilmeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pesquisar Filmes" Height="560" Width="900"
+        WindowStartupLocation="CenterOwner" Background="{StaticResource BrushBg}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Pesquisar Filmes" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+
+        <Border Grid.Row="1" Background="{StaticResource BrushCard}" CornerRadius="10" Padding="16" Margin="0,0,0,16" BorderBrush="{StaticResource BrushBorder}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Título" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" FontSize="12"/>
+                    <TextBox x:Name="TxtTitulo" Height="34" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Gênero" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" FontSize="12"/>
+                    <TextBox x:Name="TxtGenero" Height="34" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="4">
+                    <TextBlock Text="Ano" FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" FontSize="12"/>
+                    <TextBox x:Name="TxtAno" Height="34" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="6">
+                    <TextBlock Text="Nota mín." FontWeight="SemiBold" Foreground="{StaticResource BrushTextMuted}" FontSize="12"/>
+                    <TextBox x:Name="TxtNotaMin" Height="34" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Button Grid.Column="8" Content="Buscar" Style="{StaticResource BtnPrimary}" Width="100" Height="34" VerticalAlignment="Bottom" Click="BtnBuscar_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid Grid.Row="2" x:Name="DgFilmes" AutoGenerateColumns="False" CanUserAddRows="False"
+                  IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
+                <DataGridTextColumn Header="Gênero" Binding="{Binding Genero}" Width="150"/>
+                <DataGridTextColumn Header="Ano" Binding="{Binding Ano}" Width="70"/>
+                <DataGridTextColumn Header="Diretor" Binding="{Binding Diretor}" Width="170"/>
+                <DataGridTextColumn Header="Duração" Binding="{Binding DuracaoMin, StringFormat='{}{0} min'}" Width="110"/>
+                <DataGridTextColumn Header="Nota" Binding="{Binding Nota, StringFormat='★ {0:0.0}'}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <TextBlock x:Name="TxtResultado" FontSize="13" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center" Margin="0,0,16,0"/>
+            <Button Content="Voltar" Style="{StaticResource BtnOutline}" Width="100" Height="34" Click="BtnVoltar_Click" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
