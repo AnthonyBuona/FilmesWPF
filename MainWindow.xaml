@@ -59,7 +59,7 @@
                     <Border Background="#0C1322" CornerRadius="8" Padding="10,5" Margin="0,0,10,0" BorderBrush="#1A253E" BorderThickness="1">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <Ellipse Width="8" Height="8" Fill="#10B981" Margin="0,0,6,0"/>
-                            <TextBlock Text="SQLite Ativo" FontSize="12" FontWeight="SemiBold" Foreground="#A7F3D0"/>
+                            <TextBlock Text="SQL Server Ativo" FontSize="12" FontWeight="SemiBold" Foreground="#A7F3D0"/>
                         </StackPanel>
                     </Border>
 
@@ -275,7 +275,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="📁 Banco: SQLite (filmes.db) • Entity Framework Core 8 • .NET 8 WPF" 
+                <TextBlock Grid.Column="0" Text="📁 Banco: SQL Server (FilmesWPFDb) • Entity Framework Core 8 • .NET 8 WPF" 
                            FontSize="11" Foreground="#475569" VerticalAlignment="Center"/>
                 <TextBlock x:Name="TxtUltimoFilme" Grid.Column="1" Text="Catálogo pronto" 
                            FontSize="11" Foreground="{StaticResource BrushTextMuted}" VerticalAlignment="Center"/>

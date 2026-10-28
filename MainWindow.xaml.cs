@@ -60,6 +60,7 @@ namespace FilmesWPF
             var confirma = MessageBox.Show("Deseja realmente sair da sessão atual?", "Encerrar Sessão", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (confirma == MessageBoxResult.Yes)
             {
+                Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
                 Close();
                 App.ExecutarSessao();
             }

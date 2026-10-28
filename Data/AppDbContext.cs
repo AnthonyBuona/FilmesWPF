@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using FilmesWPF.Models;
 
 namespace FilmesWPF.Data
@@ -12,13 +13,44 @@ namespace FilmesWPF.Data
 
         public AppDbContext()
         {
-            Database.EnsureCreated();
+        }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "filmes.db");
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
+            if (!optionsBuilder.IsConfigured)
+            {
+                string connectionString = ObterConnectionString();
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
+
+        private static string ObterConnectionString()
+        {
+            try
+            {
+                var basePath = AppDomain.CurrentDomain.BaseDirectory;
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(basePath)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                var configuration = builder.Build();
+                var conn = configuration.GetConnectionString("DefaultConnection");
+
+                if (!string.IsNullOrWhiteSpace(conn))
+                {
+                    return conn;
+                }
+            }
+            catch
+            {
+                // Em caso de falha na leitura do json, utiliza a string padrão de fallback
+            }
+
+            return "Server=(localdb)\\mssqllocaldb;Database=FilmesWPFDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;";
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +62,8 @@ namespace FilmesWPF.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Titulo).IsRequired().HasMaxLength(120);
                 entity.Property(e => e.Genero).IsRequired().HasMaxLength(60);
+                entity.Property(e => e.Diretor).HasMaxLength(80);
+                entity.Property(e => e.Nota).HasColumnType("float");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
@@ -37,6 +71,7 @@ namespace FilmesWPF.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Senha).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Nome).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Usuario>().HasData(

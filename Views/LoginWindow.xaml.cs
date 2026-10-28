@@ -51,7 +51,6 @@ namespace FilmesWPF.Views
                     };
 
                     DialogResult = true;
-                    Close();
                     return;
                 }
 
@@ -64,7 +63,6 @@ namespace FilmesWPF.Views
                 {
                     UsuarioAutenticado = new Usuario { Id = 1, Username = "admin", Nome = "Administrador" };
                     DialogResult = true;
-                    Close();
                     return;
                 }
 
@@ -81,7 +79,6 @@ namespace FilmesWPF.Views
         private void BtnSair_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-            Close();
         }
     }
 }
